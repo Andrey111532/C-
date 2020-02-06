@@ -1,0 +1,28 @@
+# include <iostream>
+using namespace std;
+void main(){
+//вход в исключительный блок
+try{
+//создание переменных, запрос
+//и ввод данных с клавиатуры
+float a,b;
+cout<<"\nPut digit a:\n";
+cin>>a;
+cout<<"\nPut digit b:\n";
+cin>>b;
+//проверка делител€ на нуль
+if(b==0){
+//если делитель нуль Ч возбуждение
+//исключени€ типа float
+//выход из try
+throw b;
+}
+//иначе блок успешно завершен
+cout<<"\nResult = "<<(a/b)<<"\n\n";
+}
+//сюда throw передаЄт значение типа float
+catch(float g){
+//анализ и сообщение об ошибке
+cout<<"\nError Ч Divide by "<<g<<"\n\n";
+}
+}
