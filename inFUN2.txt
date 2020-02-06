@@ -1,0 +1,26 @@
+# include <iostream>
+using namespace std;
+void Test(int t){
+//вход в функцию
+cout<<"\nInside!!!\n";
+if(t==2){
+//возбуждение исключения
+throw "\nError — t is 2\n";
+}
+else if(t==3){
+//возбуждение исключения
+throw "\nError — t is 3\n";
+}
+}
+void main(){
+//вызов функции заключается в тело try
+try{
+//вызовы
+Test(4);
+Test(2);
+}
+//отлов исключений
+catch(char*s){
+cout<<"\n\n"<<s<<"\n\n";
+}
+}

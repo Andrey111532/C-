@@ -1,0 +1,27 @@
+# include <iostream>
+using namespace std;
+void Some(){
+//старый добрый анализ деления на нуль
+int a;
+int b;
+try{
+cout<<"\nPut digit a:\n";
+cin>>a;
+cout<<"\nPut digit b:\n";
+cin>>b;
+//если делитель равен 0
+//генерируем исключение
+if(b==0)
+throw "\tZerro!!!\n";
+}
+//отлов исключения и анализ
+catch(char*s){
+cout<<"\n Error!!!!"<<s<<"\n\n";
+}
+}
+void main(){
+cout<<"\nFirst!!!\n";
+//вызов функции, содержащей исключение
+Some();
+cout<<"\nSecond!!!\n";
+}

@@ -1,0 +1,21 @@
+# include <iostream>
+using namespace std;
+void main(){
+//вход в блок
+try{
+//объ€вление и инициализаци€
+//переменной
+int a;
+cout<<"\nPut digit a:\n";
+cin>>a;
+//если переменна€ равна нулю
+if(a==0)
+//генераци€ исключений
+//типа char*
+throw "URRRRRRA!!!";
+}
+//универсальный catch
+catch(...){
+cout<<"\nSome Error!!!!\n\n";
+}
+}
