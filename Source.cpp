@@ -1,260 +1,291 @@
-#include <iostream>
-
+#include<string>
+#include<iostream>
+#include<fstream>
+#include <stdlib.h>
 using namespace std;
+#define LINES 100 // максимальное количество строк в файле
 
-class Man
-{
-	char* full_name;
-	int age;
-	char* email;
-	char* phone;
-	char* sex;
+class Animal {
+	string name;
+	int t;			//temperature
+protected:
+	Animal() {
+		name = "empty";
+		t = -273;
+	}
+	Animal(string name, int t) {
+		this->name = name;
+		this->t = t;
+	}
+	string getName() {
+		return name;
+	}
+	int getTemperature() {
+		return t;
+	}
+	void setName(string name) {
+		this->name = name;
+	}
+	void setTemperature(int t) {
+		this->t = t;
+	}
+	virtual void moving() = 0;
+	virtual void saying() = 0;
+
+};
+class Cat :public Animal {
+	string colour;
+	int wool_lenght;
 public:
-	// Default
-	Man()
-	{
-		full_name = new char[strlen("Kiril Svatoy II") + 1];
-		age = 54;
-		email = new char[strlen("black.papa@molitva.com") + 1];
-		phone = new char[strlen("38(XX)XXX-XXX-X") + 1];
-		sex = new char[strlen("M") + 1];
-
-		strcpy_s(full_name, strlen("Kiril Svatoy II") + 1, "Kiril Svatoy II");
-		strcpy_s(email, strlen("black.papa@molitva.com") + 1, "black.papa@molitva.com");
-		strcpy_s(phone, strlen("38(XX)XXX-XXX-X") + 1, "38(XX)XXX-XXX-X");
-		strcpy_s(sex, strlen("M") + 1, "M");
+	Cat() {
+		setTemperature(38);
+		colour = "white";
+		wool_lenght = 0;
 	}
-	// NE DEFAULT
-	Man(char* full_name,
-		int age,
-		char* email,
-		char* phone,
-		char* sex)
-	{
-		this->full_name = new char[strlen(full_name) + 1];
-		this->age = age;
-		this->email = new char[strlen(email) + 1];
-		this->phone = new char[strlen(phone) + 1];
-		this->sex = new char[strlen(sex) + 1];
-
-		strcpy_s(this->full_name, strlen(full_name) + 1, full_name);
-		strcpy_s(this->email, strlen(email) + 1, email);
-		strcpy_s(this->phone, strlen(phone) + 1, phone);
-		strcpy_s(this->sex, strlen(sex) + 1, sex);
+	Cat(string name, string colour, int wool_lenth) {
+		setTemperature(38);
+		this->colour = colour;
+		this->wool_lenght = wool_lenght;
 	}
-	//
-	~Man()
-	{
-		delete[] full_name;
-		delete[] email;
-		delete[] phone;
-		delete[] sex;
-		age = 0;
+	void moving() {
+		cout << "Running";
 	}
-
-	// Print
-	void PrintMan()
-	{
-		cout << "Full name: " << full_name << '\n';
-		cout << "Age: " << age << '\n';
-		cout << "Mail: " << email << '\n';
-		cout << "Phone: " << phone << '\n';
-		cout << "Sex: " << sex << '\n';
-	}
-
-	// Return
-	char* Return_Full_Name()
-	{
-		return full_name;
-	}
-	int& ReturnAge()
-	{
-		return age;
-	}
-	char* Return_email()
-	{
-		return email;
-	}
-	char* Return_phone()
-	{
-		return phone;
-	}
-	char* Return_Sex()
-	{
-		return sex;
+	void saying() {
+		cout << "Meow";
 	}
 };
-
-class Calcinfo
-{
-	float base;
-	float percent;
-	float total;
-	float bonus;
-	float hour;
-	float rate_of_hour;
+class Whale :public Animal {
+	string type;
+	int lenth;
 public:
-	Calcinfo()
-	{
-		base = 0;
-		percent = 0;
-		total = 0;
-		bonus = 0;
-		hour = 0;
-		rate_of_hour = 0;
+	Whale() {
+		setTemperature(37);
+		type = "empty";
+		lenth = 0;
 	}
-	Calcinfo(float base,
-		float percent,
-		float total,
-		float bonus,
-		float hour,
-		float rate_of_hour)
-	{
-		this->base = base;
-		this->percent = percent;
-		this->total = total;
-		this->bonus = bonus;
-		this->hour = hour;
-		this->rate_of_hour = rate_of_hour;
+	Whale(string name, string type, int lenth) {
+		setName(name);
+		setTemperature(37);
+		this->type = type;
+		this->lenth = lenth;
 	}
-	~Calcinfo()
-	{
-		base = 0;
-		percent = 0;
-		total = 0;
-		bonus = 0;
-		hour = 0;
-		rate_of_hour = 0;
+	void saying() {
+		cout << "Ну допустим .... МУ";
 	}
-	// Print
-	void PrintCalcinfo()
-	{
-		cout << "Base: " << base << '\n';
-		cout << "Percent: " << percent << '\n';
-		cout << "Total: " << total << '\n';
-		cout << "Bonus: " << bonus << '\n';
-		cout << "Hour: " << hour << '\n';
-		cout << "Rate of hour: " << rate_of_hour << '\n';
+	void moving() {
+		cout << "swiming";
 	}
-
-	// Return
-	float& Return_Base()
-	{
-		return base;
-	}
-	float& Return_Percent()
-	{
-		return percent;
-	}
-	float& Return_Total()
-	{
-		return total;
-	}
-	float& Return_Bonus()
-	{
-		return bonus;
-	}
-	float& Return_Hour()
-	{
-		return hour;
-	}
-	float& Return_RateOfHour()
-	{
-		return rate_of_hour;
-	}
-
 
 };
 
-
-class Employed : public Man, public Calcinfo
-{
-	int id;
-	char* position;
-
-public:
-	static int count;
-	Employed()
-	{
-		count++;
-		id = count;
-		position = nullptr;
-	}
-	Employed(char* position)
-	{
-		if (this->position == nullptr)
-			delete[] this->position;
-
-		count++;
-		id = count;
-		this->position = new char[strlen(position) + 1];
-		strcpy_s(this->position, strlen(position) + 1, position);
-	}
-	~Employed()
-	{
-		delete[] position;
-		position = nullptr;
-	}
-
-	void PrintEmployed()
-	{
-		PrintMan();
-		PrintCalcinfo();
-		cout << "Position: " << position << '\n';
-	}
-
-	char* Return_Position()
-	{
-		return position;
-	}
-
-	void YaNePredumal(char* str)
-	{
-		if (position == nullptr)
-			position = new char[strlen(str) + 1];
-		strcpy_s(position, strlen(str) + 1, str);
-	}
+void main() {
 
 
-};
-int Employed::count = 0;
 
-//class List
-//{
-//	myData* head;
-//	myData* tail;
+	/*ofstream fout;
+	fout.open("test.txt");
+	fout << "Hello World";
+	fout.close();*/
+
+//	setlocale(LC_ALL, "RUS");
+//	system("chcp 1251");
+//	system("cls");
+//	char line[LINES][100];
+//	char str[30];
+//	char s[] = "|                              |                |                              |";
+//	 Ввод данных для размещаемой строки
+//	cout << "ФИО: ";
+//	cin.getline(str, 30); // вводим ФИО
+//	for (int i = 0; str[i] != '\0'; i++) // копируем в строку без 0
+//		s[i + 2] = str[i];               // начиная с указанной позиции
+//	cout << "Дата: ";
+//	cin.getline(str, 30);
+//	for (int i = 0; str[i] != '\0'; i++)
+//		s[i + 33] = str[i];
+//	cout << "Хобби: ";
+//	cin.getline(str, 30);
+//	for (int i = 0; str[i] != '\0'; i++)
+//		s[i + 50] = str[i];
 //
-//public:
-//	List()
+//	fstream inOut;
+//	inOut.open("file.txt", ios::in); // открываем файл для ввода
+//									  Считываем из файла имеющиеся данные
+//	int count = 0;
+//	while (inOut.getline(line[count], 100)) count++;
+//	inOut.close(); // закрываем файл
+//
+//	inOut.open("file.txt", ios::out); // открываем файл для вывода
+//	inOut << "--------------------------------------------------------------------------------" << endl;
+//	inOut << "|   ФИО                        |  Дата          | Хобби                        |" << endl;
+//	inOut << "--------------------------------------------------------------------------------" << endl;
+//	inOut << s << endl; // выводим сформированную строку
+//	inOut << "--------------------------------------------------------------------------------" << endl;
+//	 Выводим обратно в файл все строки кроме "шапки" (первые 3 строки)
+//	for (int j = 3; j < count; j++)
 //	{
+//		inOut << line[j] << endl;
+//	}
+//	inOut.close();
+//	cin.get();
+//	return;
+//}
+
+	
+//void main() {
 //
+//	/*1.	Дано целое число N(> 0) и строка S.
+//	Преобразовать строку S в строку длины N следующим образом :
+//	если длина строки S больше N, то отбросить первые символы,
+//	если длина строки S меньше N, то в ее начало добавить символы «.»(точка).*/
+//
+//	int N=0;
+//	string S="Vasya";
+//	cin >> N;
+//	if (size(S) > N) {
+//		S.erase(0, 2);
+//	}
+//	else if (size(S) < N) {
+//		S.insert(0, ".");
 //	}
 //
+//	
 //
-//};
-
-struct myData
-{
-	Employed information;
-	myData* next;
-
-};
+//	cout << S << endl;
+//
+//	system("pause");
+//}
 
 
 
-void main()
-{
-	int sz = 200;
-	char* str = new char[sz];
-	cout << "---> ";
-	gets_s(str, sz);
-	Employed X;
+//void main() {
+//	/*2.	Даны целые положительные числа N1 и N2 и строки S1 и S2.
+//	Получить из этих строк новую строку, содержащую первые N1 символов строки S1
+//	и последние N2 символов строки S2(в указанном порядке).*/
+//	int N1 = 0, N2 = 0;
+//	string S3;
+//	string S1 = "Vasya", S2 = "Lexa";
+//	cin >> N1 >> N2;
+//	S3 = S1.substr(0, N1);
+//	S3 += S2.substr(size(S2) - N2);
+//	cout << S3;
+//
+//	system("pause");
+//}
 
-	X.YaNePredumal(str);
-	X.PrintEmployed();
-	cout << "=================" << '\n';
-	Employed Y;
-	Y.YaNePredumal(str);
-	Y.PrintEmployed();
-	system("pause");
-}
+
+////3.	Дан символ C и строка S.Удвоить каждое вхождение символа C в строку S.
+//void main() {
+//	char C='a';
+//	string S="Vasya";
+//	string S2;
+//	int sz = size(S);
+//	for (int i = 0; i < sz; i++)
+//	{
+//		S2 += S[i];
+//		if (S[i] == C)
+//		{
+//			S2 += S[i];
+//		}
+//
+//	}
+//	cout << S2 << endl;
+//     
+//
+//	system("pause");
+//}
+
+
+
+////4.	Дан символ C и строки S,
+////S0.Перед каждым вхождением символа C в строку S вставить строку S0.
+//void main() {
+//	char C='c';
+//	string S="bcbc", S0="lexa";
+//	/*int sz = size(S);*/
+//	for (int i = 0; i < size(S); i++) {
+//		if (S[i] == C) {
+//			S.insert(i, S0);
+//			i += size(S0);
+//		}
+//	}
+//
+//	cout << S << endl;
+//
+//
+//	system("pause");
+//}
+
+
+
+////5.	Дан символ C и строки S, S0.
+////После каждого вхождения символа C в строку S вставить строку S0.
+//void main() {
+//	char C='c';
+//	string S="bcbc", S0="lexa";
+//	for (int i = 0; i < size(S); i++) {
+//		if (S[i] == C) {
+//			S.insert(i+1, S0);
+//			i += size(S0);
+//		}
+//	}
+//
+//	cout << S << endl;
+//
+//
+//	system("pause");
+//}
+
+
+////6.	Даны строки S и S0.Проверить,
+////содержится ли строка S0 в строке S.
+////Если содержится, то вывести True, если не содержится, то вывести False.
+//void main() {
+//	string S="lexaEgypt", S0="lexa";
+//	if (!S.find(S0))
+//		cout << "cool";
+//	else cout << "not";
+//
+//	system("pause");
+//}
+
+
+//7.	Даны строки S и S0.Найти количество вхождений строки S0 в строку S.
+
+//void main() {
+//	int count = 0;
+//	string S="lexaEglexayptlexalexa", S0="lexa";
+//	for (int i = 0; i < size(S); i++) {
+//		if (S[i] == S0[0])
+//			if (S.substr(i, size(S0)) == S0)
+//			{
+//				count++;
+//				i += size(S0) - 1;
+//			}
+//	}
+//	cout << count << endl;
+//		system("pause");
+//	}
+
+////8.	Даны строки S и S0.Удалить из строки S первую подстроку, совпадающую с S0.Если совпадающих подстрок нет, то вывести строку S без изменений.
+//void main() {
+//	string S="lexagolexa", S0="lexa";
+//	if (!S.find(S0)) {
+//		S.erase(0, size(S0));
+//		cout << S<<endl;
+//	}
+//	else cout << S<<endl;
+//
+//	system("pause");
+//}
+
+//9.	Даны строки S и S0.Удалить из строки S все подстроки, 
+//совпадающие с S0.Если совпадающих подстрок нет,
+//то вывести строку S без изменений.
+
+//void main() {
+//		int count = 0;
+//	
+//
+//
+//	system("pause");
+//}
