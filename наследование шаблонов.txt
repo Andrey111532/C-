@@ -1,0 +1,30 @@
+﻿//класс-родитель
+template <class T>
+class Pair
+{
+T a;
+T b;
+public:
+Pair (T t1, T t2);
+//...
+};
+//конструктор класса родителя
+template <class T>
+Pair <T>::Pair (T t1, T t2) : a(t1), b(t2)
+{}
+//класс-потомок
+template <class T>
+class Trio: public Pair <T>
+{
+T c;
+public:
+Trio (T t1, T t2, T t3);
+//...
+};
+//Заметьте, что вызов родительского конструктора
+//также сопровождается передачей типа Т
+//в качестве параметра.
+template <class T>
+Trio<T>::Trio (T t1, T t2, T t3): Pair <T> (t1, t2),
+c(t3)
+{}

@@ -1,0 +1,31 @@
+﻿//http://cppstudio.com/cat/309/326/
+
+//http://cppstudio.com/post/587/
+//struct tm
+//{
+//	int tm_sec;
+//	int tm_min;
+//	int tm_hour;
+//	int tm_mday;
+//	int tm_mon;
+//	int tm_year;
+//	int tm_wday;
+//	int tm_yday;
+//	int tm_isdst;
+//};
+
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+
+int main()
+{
+	struct tm *tim = new tm;
+	time_t tt = time(NULL);
+	localtime_s(tim,&tt);
+	cout << 1900 + tim->tm_year << "."<< 1 + tim->tm_mon <<"."<< tim->tm_mday << endl;
+
+	system("pause");
+	return 0;
+}
